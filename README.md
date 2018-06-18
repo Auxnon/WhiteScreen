@@ -1,0 +1,2 @@
+# WhiteScreen
+for cross platforming
