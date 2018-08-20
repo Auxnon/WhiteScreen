@@ -26,3 +26,6 @@
 
 1532055453 c:\whitescreen\include\entity.h
 
+1532055453 source:c:\whitescreen\src\entity.cpp
+	"../include/Entity.h"
+
