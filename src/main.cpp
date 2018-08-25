@@ -1,5 +1,5 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+//#include <SDL2/SDL_image.h>
 #include "../include/Entity.h"
 #include <stdlib.h>
 #include <vector>
@@ -7,7 +7,7 @@
 using namespace std;
 
 /* XPM */
-static char * icon_xpm[] = {
+/*static char * icon_xpm[] = {
   "32 23 3 1",
   "     c #FFFFFF",
   ".    c #000000",
@@ -35,23 +35,25 @@ static char * icon_xpm[] = {
   "          ..++++++++..          ",
   "            ........            ",
   "                                "};
-
+*/
 int main(int argc, char *argv[])
 {
     SDL_Window *window;
     SDL_Renderer *renderer;
-    SDL_Surface *surface;
+    //SDL_Surface *surface;
     SDL_Texture *texture;
     bool running;
     SDL_Event event;
 
+    SDL_Init(SDL_INIT_VIDEO);
     if (SDL_CreateWindowAndRenderer(0, 0, 0, &window, &renderer) < 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
             "SDL_CreateWindowAndRenderer() failed: %s", SDL_GetError());
         return(2);
     }
+    SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
 
-    surface = IMG_ReadXPMFromArray(icon_xpm);
+//    surface = IMG_ReadXPMFromArray(icon_xpm);
     /*texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (!texture) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
@@ -85,9 +87,10 @@ int main(int argc, char *argv[])
         SDL_TEXTUREACCESS_STREAMING,
         texWidth, texHeight
         );
+
     vector< unsigned char > pixels( texWidth * texHeight * 4, 0 );
 
-
+    SDL_SetWindowFullscreen(window,SDL_WINDOW_FULLSCREEN);
     running = true;
     while (running) {
         while (SDL_PollEvent(&event)) {
@@ -118,23 +121,22 @@ int main(int argc, char *argv[])
             texWidth * 4
             );
 
-
+        SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
-        SDL_RenderPresent(renderer);
+
 
         // Set render color to blue ( rect will be rendered in this color )
         SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
-
-        // Render rect
         SDL_RenderFillRect( renderer, &r );
-
-        // Render the rect to the screen
         SDL_RenderPresent(renderer);
 
 
         SDL_Delay(100);
     }
     SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+
 
     SDL_Quit();
     return(0);

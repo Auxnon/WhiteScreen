@@ -19,13 +19,14 @@
 	<SDL2/SDL_image.h>
 	"../include/Entity.h"
 
-1532044294 source:c:\whitescreen\src\main.cpp
+1535235092 source:c:\whitescreen\src\main.cpp
 	<SDL2/SDL.h>
-	<SDL2/SDL_image.h>
 	"../include/Entity.h"
+	<stdlib.h>
+	<vector>
 
-1532055453 c:\whitescreen\include\entity.h
+1534912890 c:\whitescreen\include\entity.h
 
-1532055453 source:c:\whitescreen\src\entity.cpp
+1534912891 source:c:\whitescreen\src\entity.cpp
 	"../include/Entity.h"
 
