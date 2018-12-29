@@ -36,6 +36,7 @@ using namespace std;
   "            ........            ",
   "                                "};
 */
+//int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
     SDL_Window *window;
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
     bool running;
     SDL_Event event;
 
+    //need this or keyboard will die on raspberry pi
     SDL_Init(SDL_INIT_VIDEO);
     if (SDL_CreateWindowAndRenderer(0, 0, 0, &window, &renderer) < 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
@@ -71,11 +73,11 @@ int main(int argc, char *argv[])
     dummy.setW(200);
     dummy.setH(100);
 
-    SDL_Rect r;
+    /*SDL_Rect r;
     r.x=dummy.getX();
     r.y=dummy.getY();
     r.w=dummy.getW();
-    r.h=dummy.getH();
+    r.h=dummy.getH();*/
 
 
     const unsigned int texWidth = 160;
@@ -90,8 +92,12 @@ int main(int argc, char *argv[])
 
     vector< unsigned char > pixels( texWidth * texHeight * 4, 0 );
 
+    //definetely want fullscreen for raspberry pi
     SDL_SetWindowFullscreen(window,SDL_WINDOW_FULLSCREEN);
     running = true;
+    int count=0;
+    int eval=atoi(argv[1]);
+    printf("%i",eval);
     while (running) {
         while (SDL_PollEvent(&event)) {
 
@@ -100,8 +106,14 @@ int main(int argc, char *argv[])
                 running = false;
                 break;
             }
+	    
         }
+        if(eval>0){
 
+          count++;
+          if(count>eval){running=false;break;}
+        }
+	
         for( unsigned int i = 0; i < 10000; i++ )
         {
             const unsigned int x = rand() % texWidth;
@@ -127,7 +139,7 @@ int main(int argc, char *argv[])
 
         // Set render color to blue ( rect will be rendered in this color )
         SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
-        SDL_RenderFillRect( renderer, &r );
+       // SDL_RenderFillRect( renderer, &r );
         SDL_RenderPresent(renderer);
 
 
@@ -136,8 +148,6 @@ int main(int argc, char *argv[])
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-
-
     SDL_Quit();
     return(0);
 }
@@ -146,8 +156,17 @@ Uint32 getP( SDL_Surface *surface, int x, int y ){
     Uint32 *pixels = (Uint32 *)surface->pixels;
     return pixels[ ( y * surface->w ) + x ];
 }
+
 void putP( SDL_Surface *surface, int x, int y, Uint32 pixel ){
     Uint32 *pixels = (Uint32 *)surface->pixels;
     pixels[ ( y * surface->w ) + x ] = pixel;
+}
+
+void putt(&vector< unsigned char > pixels,int x,int y,int r,int g,int b,int w){
+  const unsigned int offset = ( texWidth * 4 * y ) + x * 4;
+            pixels[ offset + 0 ] = b;        // b
+            pixels[ offset + 1 ] = g;        // g
+            pixels[ offset + 2 ] = r;        // r
+            pixels[ offset + 3 ] = SDL_ALPHA_OPAQUE;    // a
 }
 
