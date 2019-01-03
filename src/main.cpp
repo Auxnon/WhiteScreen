@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include "../include/SDL2/SDL.h"
 //#include <SDL2/SDL_image.h>
 #include "../include/Entity.h"
 #include <stdlib.h>
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
             "SDL_CreateWindowAndRenderer() failed: %s", SDL_GetError());
         return(2);
     }
-    SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
+    //SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
 
 //    surface = IMG_ReadXPMFromArray(icon_xpm);
     /*texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -67,11 +67,11 @@ int main(int argc, char *argv[])
     SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
     SDL_RenderClear( renderer );
 
-    Entity dummy;
+   /*Entity dummy;
     dummy.setX(50);
     dummy.setY(50);
     dummy.setW(200);
-    dummy.setH(100);
+    dummy.setH(100);*/
 
     /*SDL_Rect r;
     r.x=dummy.getX();
@@ -96,7 +96,10 @@ int main(int argc, char *argv[])
     SDL_SetWindowFullscreen(window,SDL_WINDOW_FULLSCREEN);
     running = true;
     int count=0;
-    int eval=atoi(argv[1]);
+    int eval=10;
+    if(argc>1){
+    eval=atoi(argv[1]);
+	}
     printf("%i",eval);
     while (running) {
         while (SDL_PollEvent(&event)) {
@@ -161,7 +164,7 @@ void putP( SDL_Surface *surface, int x, int y, Uint32 pixel ){
     Uint32 *pixels = (Uint32 *)surface->pixels;
     pixels[ ( y * surface->w ) + x ] = pixel;
 }
-
+/*
 void putt(&vector< unsigned char > pixels,int x,int y,int r,int g,int b,int w){
   const unsigned int offset = ( texWidth * 4 * y ) + x * 4;
             pixels[ offset + 0 ] = b;        // b
@@ -169,4 +172,4 @@ void putt(&vector< unsigned char > pixels,int x,int y,int r,int g,int b,int w){
             pixels[ offset + 2 ] = r;        // r
             pixels[ offset + 3 ] = SDL_ALPHA_OPAQUE;    // a
 }
-
+*/
