@@ -2,7 +2,7 @@
 echo 'compiling...'
 if [ "$1" = "linux" ] || [ "$1" = "" ]; then
 	echo '64 bit linux binary...'
-	g++ -Wall -Wextra -o bin/gamex86_64 src/main.cpp src/Entity.cpp -lSDL2
+	g++ -Wall -Wextra -o bin/gamex86_64 src/main3d.cpp src/Entity.cpp -lSDL2 -lGLEW -lGL
 	if [ $? -eq 0 ]; then
 		echo '64 Linux done!'
 	fi
