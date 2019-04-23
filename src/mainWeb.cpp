@@ -6,6 +6,8 @@
 #define GL_GLEXT_PROTOTYPES 1
 #include <SDL_opengles2.h>
 
+#include "../include/Land.h"
+
 // Shader sources
 const GLchar* vertexSource =
     "attribute vec4 position;                     \n"
@@ -24,9 +26,12 @@ const GLchar* fragmentSource =
 
 // an example of something we will control from the javascript side
 bool background_is_black = true;
+int x=0;
+int y=0;
 
 // the function called by the javascript code
 extern "C" void EMSCRIPTEN_KEEPALIVE toggle_background_color() { background_is_black = !background_is_black; }
+extern "C" void EMSCRIPTEN_KEEPALIVE pointAt(int xi, int yi){x=xi;y=yi;}
 
 std::function<void()> loop;
 void main_loop() { loop(); }
